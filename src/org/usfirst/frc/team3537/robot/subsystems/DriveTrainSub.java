@@ -10,6 +10,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.hal.PDPJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -95,9 +96,12 @@ public class DriveTrainSub extends Subsystem
 	{
 		return gyro.getAngle();
 	}
-	public void driveMecanum(double xspeed, double yspeed, double rotationspeed)
+	public void driveMecanum(double xIn, double yIn, double rotation)
 	{
-		drive.mecanumDrive_Cartesian(xspeed, yspeed, rotationspeed, Robot.driveTrainSub.getAngle());
+		FLTalon.set( -xIn + yIn + rotation);
+	    FRTalon.set( -xIn + yIn - rotation);
+	    BLTalon.set( xIn + yIn + rotation);
+	    BRTalon.set( xIn + yIn - rotation);
 	}
 	public void driveTank(double xspeed, double yspeed)
 	{
@@ -117,6 +121,11 @@ public class DriveTrainSub extends Subsystem
 	public void initDefaultCommand() 
 	{
 		setDefaultCommand(new DriveTrainCom());
+	}
+	public void resetEncoders()
+	{
+		BLTalon.setPosition(0);
+		FRTalon.setPosition(0);
 	}
 	public double FREncoderPos()
 	{
@@ -158,8 +167,6 @@ public class DriveTrainSub extends Subsystem
 		SmartDashboard.putDouble("Back Left Talon ENC", BLTalon.getPosition());
 		//FaultUnderVolt
 		//System.out.println(FRTalon.getStickyFaultUnderVoltage());
-		SmartDashboard.putDouble("PDP Current", pdp.getPDPTotalCurrent(0));
-		SmartDashboard.putDouble("PDP Temp", pdp.getPDPTemperature(0));
 		
 	}
 	public void SmartInit()
@@ -167,6 +174,11 @@ public class DriveTrainSub extends Subsystem
 		SmartDashboard.putDouble("TurnP", RobotMap.TurnP);
 		SmartDashboard.putDouble("TurnI", RobotMap.TurnI);
 		SmartDashboard.putDouble("TurnD", RobotMap.TurnD);
+		
+		
+		SmartDashboard.putDouble("DriveP", RobotMap.DriveP);
+		SmartDashboard.putDouble("DriveI", RobotMap.DriveI);
+		SmartDashboard.putDouble("DriveD", RobotMap.DriveD);
 	}
 
 }

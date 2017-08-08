@@ -8,6 +8,9 @@ package org.usfirst.frc.team3537.robot;
  */
 public class RobotMap {
 	
+	public static final double DriveP = 0;
+	public static final double DriveI = 0;
+	public static final double DriveD = 0;
 	//Controllers
 	public static int controllerOnePort = 0;
 	public static int controllerTwoPort = 1;
@@ -21,10 +24,10 @@ public class RobotMap {
 	public static int buttonLS = 9;
 	public static int buttonRS = 10;
 	//Axis
-	public static int X_AxisL = 0;
+	public static int X_AxisL = 4;
 	public static int Y_AxisL = 1;
 
-	public static int X_AxisR = 4;
+	public static int X_AxisR = 0;
 	public static int Y_AxisR = 5;
 
 	//Triggers

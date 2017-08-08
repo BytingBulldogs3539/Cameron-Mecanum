@@ -3,6 +3,7 @@ package org.usfirst.frc.team3537.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team3537.robot.Robot;
+import org.usfirst.frc.team3537.robot.RobotMap;
 
 /**
  *
@@ -24,7 +25,7 @@ public class DriveTrainCom extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.driveTrainSub.driveMecanum(Robot.joySub.driverLXAxis(), Robot.joySub.driverLYAxis(), Robot.joySub.driverRXAxis());
+		Robot.driveTrainSub.driveMecanum(Robot.oi.driver.getRawAxis(RobotMap.X_AxisR), -Robot.oi.driver.getRawAxis(RobotMap.X_AxisL) ,Robot.oi.driver.getRawAxis(RobotMap.Y_AxisL));
 	}
 	
 	@Override

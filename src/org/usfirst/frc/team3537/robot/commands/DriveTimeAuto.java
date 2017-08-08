@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3537.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -8,6 +9,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveTimeAuto extends CommandGroup {
 
     public DriveTimeAuto() {
-    	addSequential(new DriveAngle(30, 1));
+    	addSequential(new drivein(100));
     }
 }
