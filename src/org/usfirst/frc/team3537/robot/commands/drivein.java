@@ -1,7 +1,8 @@
 package org.usfirst.frc.team3537.robot.commands;
 
 import org.usfirst.frc.team3537.robot.Robot;
-
+import org.usfirst.frc.team3537.robot.utilities.BulldogPIDOutput;
+import org.usfirst.frc.team3537.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -16,9 +17,10 @@ public class drivein extends PIDCommand {
 
 
     private int inches;
+	private BulldogPIDOutput pidOutput = new BulldogPIDOutput();
 	private PIDController anglePID;
-    private org.usfirst.frc.team3537.robot.utilities.BulldogPIDOutput pidOutput = new org.usfirst.frc.team3537.robot.utilities.BulldogPIDOutput();
-	private double output ;
+	private double output;
+	
 	private final PIDSource angle_output_source = new PIDSource()
 	{
 		public void setPIDSourceType(PIDSourceType pidSource)
@@ -35,7 +37,7 @@ public class drivein extends PIDCommand {
 			return Robot.driveTrainSub.getAngle();
 		}
 	};
-    
+	
 	public drivein(double in) 
     {
 		super(SmartDashboard.getDouble("DriveP"), SmartDashboard.getDouble("DriveI"), SmartDashboard.getDouble("DriveD"));
@@ -55,20 +57,21 @@ public class drivein extends PIDCommand {
     	this.getPIDController().setAbsoluteTolerance(.2);
     	this.getPIDController().enable();
     	
-		anglePID = new PIDController(org.usfirst.frc.team3537.robot.RobotMap.TurnP, org.usfirst.frc.team3537.robot.RobotMap.TurnI, org.usfirst.frc.team3537.robot.RobotMap.TurnD, angle_output_source,
+    	
+    	anglePID = new PIDController(RobotMap.TurnP, RobotMap.TurnI, RobotMap.TurnD, angle_output_source,
 				pidOutput);
-		anglePID.setSetpoint(0);
-
-		anglePID.setAbsoluteTolerance(1);
-		anglePID.setToleranceBuffer(15);
+    	anglePID.setSetpoint(0);
+		anglePID.setAbsoluteTolerance(2);
+		anglePID.setToleranceBuffer(10);
 		pidOutput.Reset();
 		anglePID.enable();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
-    {
-    	Robot.driveTrainSub.driveMecanum(0, pidOutput.Get() ,output);
+    {	
+    	Robot.driveTrainSub.driveMecanum(0, 0 ,output);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -83,6 +86,8 @@ public class drivein extends PIDCommand {
     	System.out.println("end");
     	this.getPIDController().disable();
     	Robot.driveTrainSub.driveMecanum(0, 0 ,0);
+		anglePID.disable();
+		pidOutput.Reset();
     }
 
     // Called when another command which requires one or more of the same
