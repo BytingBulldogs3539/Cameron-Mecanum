@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3537.robot.commands.DriveTimeAuto;
+import org.usfirst.frc.team3537.robot.commands.DriveTimeAutoside;
 import org.usfirst.frc.team3537.robot.commands.DriveTrainCom;
+import org.usfirst.frc.team3537.robot.commands.TurnAuto;
+import org.usfirst.frc.team3537.robot.commands.driveinside;
 import org.usfirst.frc.team3537.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team3537.robot.subsystems.JoySub;
 
@@ -33,11 +36,15 @@ public class Robot extends IterativeRobot
 	public void robotInit() 
 	{
 		oi = new OI();
-		chooser.addDefault("Default Auton", new DriveTimeAuto());
+		SmartInit();
+		chooser.addDefault("Test Drive 100", new DriveTimeAuto());
+		chooser.addDefault("Test Drive side 100", new DriveTimeAutoside());
+		chooser.addDefault("Test Turn 90", new TurnAuto());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartInit();
-		Update();
+		
 		SmartDashboard.putData(new DriveTimeAuto());
+		SmartDashboard.putData(new TurnAuto());
 	}
 
 	@Override

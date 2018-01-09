@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class drivein extends PIDCommand {
+public class driveinside extends PIDCommand {
 
 
     private int inches;
@@ -38,7 +38,7 @@ public class drivein extends PIDCommand {
 		}
 	};
 	
-	public drivein(double in) 
+	public driveinside(double in) 
     {
 		
 		super(SmartDashboard.getDouble("DriveP"), SmartDashboard.getDouble("DriveI"), SmartDashboard.getDouble("DriveD"));
@@ -76,7 +76,8 @@ public class drivein extends PIDCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {	
-    	Robot.driveTrainSub.driveMecanum(anglePID.get(), 0 ,output);
+    	
+    	Robot.driveTrainSub.driveMecanum(-output, anglePID.get() ,0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -106,7 +107,7 @@ public class drivein extends PIDCommand {
 	@Override
 	protected double returnPIDInput() 
 	{
-		return Robot.driveTrainSub.FREncoderPos()*12.566;
+		return Robot.driveTrainSub.BLEncoderPos()*12.566;
 	}
 
 	@Override
